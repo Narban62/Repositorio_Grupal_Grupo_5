@@ -1,4 +1,4 @@
-package Interfaces_game;
+package interface_package;
 
 import java.awt.Graphics;
 

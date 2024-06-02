@@ -1,4 +1,7 @@
-package game_package;
+package default_package;
+
+import game_package.Panel;
+
 /**
  * @author Luis Esteban Perengüez Bastidas
  * Tema: Juego Galaga
@@ -10,9 +13,5 @@ public class Main {
 				
 		Panel panel = new Panel();
 		panel.ventana();
-
-		System.out.println("Juego Galaga");
-		System.out.println("Programacion Orientada a Objetos");
-		System.out.println("Universidad Central del Ecuador");
 }
 }

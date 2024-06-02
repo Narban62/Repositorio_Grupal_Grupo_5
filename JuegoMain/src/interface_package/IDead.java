@@ -1,4 +1,4 @@
-package Interfaces_game;
+package interface_package;
 
 public interface IDead {
 	public void die();

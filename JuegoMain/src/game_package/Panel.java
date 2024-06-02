@@ -1,5 +1,8 @@
 package game_package;
 
+import model_package.Hero;
+import model_package.Opponents;
+
 import javax.swing.*;
 
 public class Panel extends JFrame {
@@ -9,10 +12,10 @@ public class Panel extends JFrame {
 		setTitle("UNIVERSIDAD CENTRAL DEL ECUADOR");
 		setResizable(false);
 		setLocation(290, 120);
-		setSize(900, 700);
+		setSize(800, 600);
 
 		String name = JOptionPane.showInputDialog("Ingrese nombre del usuario:");
-		Hero hero = new Hero(390, 440, 200, name);
+		Hero hero = new Hero(390, 440, 100, name);
 		Opponents enemies = new Opponents(5, 800, 600);
 		PanelGame panelG = new PanelGame(hero, enemies);
 		add(panelG);

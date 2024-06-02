@@ -1,4 +1,4 @@
-package game_package;
+package model_package;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -8,13 +8,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-
 import javax.swing.Timer;
-
-import Interfaces_game.IDrawable;
-import Interfaces_game.IDead;
-import Interfaces_game.IMovable;
-import Interfaces_game.IShootable;
+import interface_package.*;
 
 public class Opponents implements IDrawable, IMovable, IDead, IShootable {
 
@@ -148,7 +143,7 @@ public class Opponents implements IDrawable, IMovable, IDead, IShootable {
 	        
 	        if (bulletBounds.intersects(enemyBounds)) {
 	            enemyIterator.remove(); // Elimina al enemigo
-	            score += 10; // Incrementa el puntaje
+	            score += 5; // Incrementa el puntaje
 	            return true;
 	        }
 	    }

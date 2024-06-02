@@ -1,13 +1,15 @@
 package game_package;
 
+import model_package.Bullet;
+import model_package.Hero;
+import model_package.Opponents;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -85,6 +87,10 @@ public class PanelGame extends JPanel {
                     System.out.println("el heroe ha muerto");
                 }
             }
+            if (bullet.getY() >= getHeight()) {
+                bulletIterator2.remove();
+                System.out.println("toco filo bala borrada");
+           }
         }
 
 

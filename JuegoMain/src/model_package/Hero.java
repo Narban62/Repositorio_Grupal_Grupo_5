@@ -1,17 +1,9 @@
-package game_package;
-
-
+package model_package;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-
 import javax.swing.Timer;
-
-import Interfaces_game.IDrawable;
-import Interfaces_game.IDead;
-import Interfaces_game.IMovable;
-import Interfaces_game.IShootable;
+import interface_package.*;
 
 public class Hero implements IDrawable, IShootable, IMovable, IDead {
 	private List<Point> positions;
@@ -118,7 +110,7 @@ public class Hero implements IDrawable, IShootable, IMovable, IDead {
 		Rectangle bulletBounds = new Rectangle(bullet.getX(), bullet.getY(), 7, 13); // Asume que la bala es un rectángulo de 7x13
 
 		if (bulletBounds.intersects(heroBounds)) {
-			life -= 10; // Reducir la vida del héroe
+			life -= 5; // Reducir la vida del héroe
 			System.out.println("colision detectada y resta 10");
 
 			// Verificar si la salud del héroe ha llegado a 0
@@ -132,21 +124,24 @@ public class Hero implements IDrawable, IShootable, IMovable, IDead {
 	}
 
 	public void reduceHealth() {
-		this.life -= 10; // Reduce la salud en 10
+		this.life -= 5; // Reduce la salud en 10
 		if (this.life < 0) {
 			this.life = 0; // Asegura que la salud no sea negativa
 		}
 	}
 
 	public int getHealth() {
+
 		return life;
 	}
 
 	public int getY() {
+
 		return y;
 	}
 
 	public int getX() {
+
 		return x;
 	}
 
