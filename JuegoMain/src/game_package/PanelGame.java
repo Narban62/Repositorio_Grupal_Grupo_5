@@ -16,7 +16,7 @@ import javax.swing.Timer;
 public class PanelGame extends JPanel {
 
 	private Hero hero;
-    private Villain enemies;
+    private Opponents enemies;
     private final int GAME_OVER_LINE_Y = 400;
 
     public PanelGame() {
@@ -25,7 +25,7 @@ public class PanelGame extends JPanel {
         
         String name = JOptionPane.showInputDialog("Ingrese nombre del usuario:");
         hero = new Hero(390, 440, 200, name);
-        enemies = new Villain(8, 800, 600);
+        enemies = new Opponents(8, 800, 600);
         
     
         

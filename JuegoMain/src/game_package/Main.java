@@ -11,6 +11,13 @@ public class Main {
 		Panel panel = new Panel();
 		panel.ventana();
 
+		System.out.println("Juego Galaga");
+		System.out.println("Belen Anahis Paca Silva");
+		System.out.println("Programacion Orientada a Objetos");
+		System.out.println("Universidad Central del Ecuador");
+
+
+
 
 }
 }

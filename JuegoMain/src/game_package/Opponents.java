@@ -16,14 +16,14 @@ import Interfaces_game.IDead;
 import Interfaces_game.IMovable;
 import Interfaces_game.IShootable;
 
-public class Villain implements IDrawable, IMovable, IDead, IShootable {
+public class Opponents implements IDrawable, IMovable, IDead, IShootable {
 
 	private List<Point> positions;
 	private List<Integer> directions;
 	private static List<Bullet> bullets = new ArrayList<>();
 	private int minX, maxX, score;
 
-	public Villain(int numEnemies, int maxX, int maxY) {
+	public Opponents(int numEnemies, int maxX, int maxY) {
 		this.maxX = maxX;
 		positions = new ArrayList<>();
 		directions = new ArrayList<>();
