@@ -1,6 +1,6 @@
 package game_package;
 /**
- * @author Belen Anahis Paca Silva
+ * @author Luis Esteban Perengüez Bastidas
  * Tema: Juego Galaga
  */
 public class Main {
@@ -12,12 +12,7 @@ public class Main {
 		panel.ventana();
 
 		System.out.println("Juego Galaga");
-		System.out.println("Belen Anahis Paca Silva");
 		System.out.println("Programacion Orientada a Objetos");
 		System.out.println("Universidad Central del Ecuador");
-
-
-
-
 }
 }

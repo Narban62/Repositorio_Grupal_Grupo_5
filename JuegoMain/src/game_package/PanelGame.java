@@ -1,31 +1,28 @@
 package game_package;
 
-import static java.awt.Font.PLAIN;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class PanelGame extends JPanel {
-
-	private Hero hero;
+    private Hero hero;
     private Opponents enemies;
     private final int GAME_OVER_LINE_Y = 400;
 
-    public PanelGame() {
+    public PanelGame( Hero hero, Opponents enemies) {
+        this.hero = hero;
+        this.enemies = enemies;
         setBackground(Color.BLACK);
         setFocusable(true);
-        
-        String name = JOptionPane.showInputDialog("Ingrese nombre del usuario:");
-        hero = new Hero(390, 440, 200, name);
-        enemies = new Opponents(8, 800, 600);
         
     
         
@@ -35,6 +32,7 @@ public class PanelGame extends JPanel {
                 int keyCode = e.getKeyCode();
                 switch (keyCode) {
                     case KeyEvent.VK_UP:
+
                         hero.movements("UP");
                         break;
                     case KeyEvent.VK_DOWN:
@@ -64,15 +62,31 @@ public class PanelGame extends JPanel {
     private void updateGame() {
         hero.update(); // Actualizar las balas del jugador
         enemies.movements("LEFT"); // Mover a los enemigos
-
+        enemies.updateBullet(); // Actualizar las balas de los enemigos
         // Verificar las colisiones entre las balas del jugador y los enemigos
         Iterator<Bullet> bulletIterator = hero.getBullets().iterator();
+        Iterator<Bullet> bulletIterator2 = enemies.getBullets().iterator();
+
         while (bulletIterator.hasNext()) {
             Bullet bullet = bulletIterator.next();
             if (enemies.checkCollision(bullet)) {
                 bulletIterator.remove(); // Eliminar la bala
             }
+
         }
+        while (bulletIterator2.hasNext()) {
+            Bullet bullet = bulletIterator2.next();
+            if (hero.checkCollision(bullet)) {
+                hero.reduceHealth(); // Reducir la salud del héroe
+                System.out.println("colision reduce la salud del heroe");
+                bulletIterator2.remove(); // Eliminar la bala
+                // Verificar si la salud del héroe ha llegado a 0
+                if (hero.getHealth() == 0) {
+                    System.out.println("el heroe ha muerto");
+                }
+            }
+        }
+
 
      // Verificar si el jugador ha perdido todas las vidas
         if (!hero.isAlive() || hero.getY() < GAME_OVER_LINE_Y) {
@@ -119,7 +133,15 @@ public class PanelGame extends JPanel {
         enemies.draw(g); // Dibujar a los enemigos
         drawScoreAndHealth(g); // Dibujar puntaje, nombre del jugador, barra de vida y línea divisoria
 
-        
+        // Dibujar las balas del jugador
+        for (Bullet bullet : hero.getBullets()) {
+            bullet.draw(g); // Dibuja cada bala en la lista de balas del jugador
+        }
+
+        // Dibujar las balas de los enemigos
+        for (Bullet bullet : enemies.getBullets()) {
+            bullet.draw(g); // Dibuja cada bala en la lista de balas de los enemigos
+        }
 
 
      // Dibujar la línea de "Game Over"

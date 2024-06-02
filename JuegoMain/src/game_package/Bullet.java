@@ -10,6 +10,7 @@ import Interfaces_game.IMovable;
 public class Bullet implements IDrawable, IMovable {
 	
 	private int x, y;
+	private boolean isMarkedForRemoval = false;
 
 	public Bullet(int x, int y) {
 		this.x = x;
@@ -53,11 +54,21 @@ public class Bullet implements IDrawable, IMovable {
 	}
 
 	public int getX() {
+
 		return x;
 	}
 
 	public int getY() {
+
 		return y;
 	}
 
+	public void update(){
+		movements("DOWN");
+	 }
+
+	public void remove(Bullet bullet) {
+		isMarkedForRemoval = true;
+
+	}
 }

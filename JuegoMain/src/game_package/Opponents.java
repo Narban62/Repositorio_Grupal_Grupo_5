@@ -49,12 +49,16 @@ public class Opponents implements IDrawable, IMovable, IDead, IShootable {
 	@Override
 	public void draw(Graphics g) {
 		for (Point position : positions) {
-			// Dibujar un triángulo
+			// Dibujar una sola figura formada por dos triángulos invertidos juntos
 			g.setColor(Color.GREEN);
-			g.fillRect((int) position.getX(), (int) position.getY(), 25, 25);
+
+			// Coordenadas para la figura
+			int[] xPoints = {(int) position.getX(), (int) position.getX() + 10, (int) position.getX() + 20, (int) position.getX() + 30, (int) position.getX() + 40};
+			int[] yPoints = {(int) position.getY(), (int) position.getY() + 25, (int) position.getY(), (int) position.getY() + 25, (int) position.getY()};
+
+			g.fillPolygon(xPoints, yPoints, 5);
 		}
 	}
-
 	@Override
 	public void die() {
 	    // Itera sobre las posiciones de los enemigos
@@ -95,6 +99,9 @@ public class Opponents implements IDrawable, IMovable, IDead, IShootable {
 			if (position.getX() <= minX || position.getX() >= maxX - 40) {
 				currentDirection *= -1;
 				directions.set(i, currentDirection);
+
+				// Mover hacia abajo cuando se toca el borde
+				position.setLocation(position.getX(), position.getY() + 10); // Asume que el enemigo se mueve 10 unidades hacia abajo
 			}
 
 			// Mover en la dirección actual
@@ -111,10 +118,10 @@ public class Opponents implements IDrawable, IMovable, IDead, IShootable {
 
 	}
 
-	public void updateBullets() {
+	public void updateBullet() {
 		//for para que las balas se muevan hacia abajo
 		for (Bullet bullets : bullets) {
-			bullets.movements("DOWN");
+			bullets.update();
 		}
 	}
 
@@ -147,4 +154,5 @@ public class Opponents implements IDrawable, IMovable, IDead, IShootable {
 	    }
 	    return false;
 	}
+
 }

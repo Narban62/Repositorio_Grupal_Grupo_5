@@ -3,6 +3,7 @@ package game_package;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.Timer;
@@ -13,7 +14,7 @@ import Interfaces_game.IMovable;
 import Interfaces_game.IShootable;
 
 public class Hero implements IDrawable, IShootable, IMovable, IDead {
-
+	private List<Point> positions;
 	private int x, y, life;
 	private String names;
 	private boolean isAlive;
@@ -24,18 +25,18 @@ public class Hero implements IDrawable, IShootable, IMovable, IDead {
 	public Hero(int x, int y, int health, String name) {
 		this.x = x;
 		this.y = y;
+		positions = new ArrayList<>();
 		this.isAlive = true;
 		this.life = health;
 		this.names = name;
 		shootTimer = new Timer(100, e -> {
 			shootTimer.stop(); // Detener el temporizador
 		});
+		positions.add(new Point(x, y));
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
-
 		// Dibujar un triángulo
 		int[] xPoints = { x, x + 10, x - 10 };
 		int[] yPoints = { y, y + 20, y + 20 };
@@ -109,6 +110,31 @@ public class Hero implements IDrawable, IShootable, IMovable, IDead {
 		if (life < 0) {
 			life = 0;
 			isAlive = false;
+		}
+	}
+
+	public boolean checkCollision(Bullet bullet) {
+		Rectangle heroBounds = new Rectangle(x, y, 25, 25); // Asume que el héroe es un rectángulo de 25x25
+		Rectangle bulletBounds = new Rectangle(bullet.getX(), bullet.getY(), 7, 13); // Asume que la bala es un rectángulo de 7x13
+
+		if (bulletBounds.intersects(heroBounds)) {
+			life -= 10; // Reducir la vida del héroe
+			System.out.println("colision detectada y resta 10");
+
+			// Verificar si la salud del héroe ha llegado a 0
+			if (life <= 0) {
+				isAlive = false; // Marcar al héroe como muerto
+				System.out.println("el heroe ha muerto");
+			}
+			return true;
+		}
+		return false;
+	}
+
+	public void reduceHealth() {
+		this.life -= 10; // Reduce la salud en 10
+		if (this.life < 0) {
+			this.life = 0; // Asegura que la salud no sea negativa
 		}
 	}
 
