@@ -7,6 +7,7 @@ import javax.swing.*;
 
 public class Panel extends JFrame {
 
+
 	public void ventana() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("UNIVERSIDAD CENTRAL DEL ECUADOR");

@@ -5,6 +5,7 @@ import interface_package.*;
 
 public class Container {
 
+
 	public void draw(IDrawable dra, Graphics g) {
 
 		dra.draw(g);

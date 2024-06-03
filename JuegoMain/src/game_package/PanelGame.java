@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class PanelGame extends JPanel {
+
     private Hero hero;
     private Opponents enemies;
     private final int GAME_OVER_LINE_Y = 400;

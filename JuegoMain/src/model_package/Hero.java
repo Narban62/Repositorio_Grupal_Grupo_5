@@ -7,11 +7,15 @@ import interface_package.*;
 
 public class Hero implements IDrawable, IShootable, IMovable, IDead {
 	private List<Point> positions;
-	private int x, y, life;
+	private int x;
+	private int y;
+	private int life;
 	private String names;
 	private boolean isAlive;
 	private static List<Bullet> bullets = new ArrayList<>();
 	private Timer shootTimer;
+
+
 
 
 	public Hero(int x, int y, int health, String name) {
@@ -32,8 +36,11 @@ public class Hero implements IDrawable, IShootable, IMovable, IDead {
 		// Dibujar un triángulo
 		int[] xPoints = { x, x + 10, x - 10 };
 		int[] yPoints = { y, y + 20, y + 20 };
-		g.setColor(Color.CYAN);
+		g.setColor(Color.WHITE);
 		g.fillPolygon(xPoints, yPoints, 3);
+
+
+
 
 	}
 	
