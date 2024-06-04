@@ -1,6 +1,6 @@
 package default_package;
 
-import game_package.Panel;
+import game_package.GameFrame;
 
 /**
  * @author Luis Esteban Perengüez Bastidas
@@ -11,7 +11,7 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 				
-		Panel panel = new Panel();
-		panel.ventana();
+		GameFrame GameFrame = new GameFrame();
+		GameFrame.ventana();
 }
 }

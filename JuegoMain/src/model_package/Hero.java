@@ -7,16 +7,11 @@ import interface_package.*;
 
 public class Hero implements IDrawable, IShootable, IMovable, IDead {
 	private List<Point> positions;
-	private int x;
-	private int y;
-	private int life;
+	private int x,y,life;
 	private String names;
 	private boolean isAlive;
 	private static List<Bullet> bullets = new ArrayList<>();
 	private Timer shootTimer;
-
-
-
 
 	public Hero(int x, int y, int health, String name) {
 		this.x = x;
@@ -38,10 +33,6 @@ public class Hero implements IDrawable, IShootable, IMovable, IDead {
 		int[] yPoints = { y, y + 20, y + 20 };
 		g.setColor(Color.WHITE);
 		g.fillPolygon(xPoints, yPoints, 3);
-
-
-
-
 	}
 	
 
@@ -60,14 +51,17 @@ public class Hero implements IDrawable, IShootable, IMovable, IDead {
 	}
 
 	public static List<Bullet> getBullets() {
+
 		return bullets;
 	}
-	
+
     public boolean isAlive() {
-        return life > 0;
+
+		return life > 0;
     }
     public String getName() {
-        return names;
+
+		return names;
     }
 
 	@Override
