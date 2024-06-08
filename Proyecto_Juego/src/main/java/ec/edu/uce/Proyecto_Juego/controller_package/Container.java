@@ -1,5 +1,7 @@
 package ec.edu.uce.Proyecto_Juego.controller_package;
 
+
+
 import ec.edu.uce.Proyecto_Juego.model_package.objects.Bullet;
 import ec.edu.uce.Proyecto_Juego.model_package.objects.Hero;
 import ec.edu.uce.Proyecto_Juego.model_package.objects.Opponents;
@@ -10,64 +12,72 @@ import java.util.List;
 import java.util.Random;
 
 public class Container {
-    final int SCREEN_WITDH = 700;
-    final int SCREEN_HEIGHT = 200;
+    final int SCREEN_WITDH =700;
+    final int SCREEN_HEIGHT =200;
 
     Hero hero = new Hero();
     List<Opponents> opponents = new ArrayList<Opponents>();
     List<Bullet> bulletsHero = new ArrayList<Bullet>();
-    List<Bullet> bulletsOpponents = new ArrayList<Bullet>();
+    List<Bullet> bulletsOpponets = new ArrayList<Bullet>();
     Random random = new Random();
-    //VAROABLE LEVEL
+
+    // varaible de levels
     private int level = 1;
 
     //Opponents opponet = new Opponents();
 
-    public Container() {
+    public  Container() {
+
+
     }
+
 
     public void draw(Graphics graphics) {
         hero.draw(graphics);
-        createOpponents(level);
-        for (int i = 0; i < opponents.size(); i++) {
+
+        creatOpponents(level);
+
+        for (int i = 0; i< opponents.size(); i++) {
             opponents.get(i).draw(graphics);
         }
-        for (int i = 0; i < bulletsHero.size(); i++) {
+
+        for (int i = 0; i< bulletsHero.size(); i++) {
             bulletsHero.get(i).draw(graphics);
         }
-        for (int i = 0; i < bulletsOpponents.size(); i++) {
-            bulletsOpponents.get(i).draw(graphics);
+
+        for (int i = 0; i< bulletsOpponets.size(); i++) {
+            bulletsOpponets.get(i).draw(graphics);
         }
 
     }
 
-    public void createOpponents(int level) {
-        if (level == 1 && opponents.isEmpty()){
-            for (int i = 0; i < 5; i++) {
+    public void creatOpponents(int level) {
+
+        if (level == 1 && opponents.isEmpty()) {
+
+            for (int i = 0; i< 5; i++) {
                 opponents.add(new Opponents(random.nextInt(SCREEN_WITDH), random.nextInt(SCREEN_HEIGHT)));
             }
-        this.level++;
-    }      else if(level ==2&&opponents.isEmpty())
+            this.level++;
 
-    {
-        for (int i = 0; i < 10; i++) {
-            opponents.add(new Opponents(random.nextInt(SCREEN_WITDH), random.nextInt(SCREEN_HEIGHT)));
+        } else if (level == 2 && opponents.isEmpty()) {
+
+            for (int i = 0; i< 10; i++) {
+                opponents.add(new Opponents(random.nextInt(SCREEN_WITDH), random.nextInt(SCREEN_HEIGHT)));
+            }
+            this.level++;
+
+        } else if (level == 3 && opponents.isEmpty()) {
+
+            for (int i = 0; i< 1; i++) {
+                opponents.add(new Opponents(random.nextInt(SCREEN_WITDH), random.nextInt(SCREEN_HEIGHT)));
+            }
+
+            this.level++;
 
         }
-        level++;
 
-    }      else if(level ==3&&opponents.isEmpty())
-
-    {
-        for (int i = 0; i < 1; i++) {
-            opponents.add(new Opponents(random.nextInt(SCREEN_WITDH), random.nextInt(SCREEN_HEIGHT)));
-
-        }
-        this.level++;
     }
-}
-
-
 
     public void moveLeft(int variable) {
         hero.moveLeft(variable);
@@ -83,27 +93,43 @@ public class Container {
         for (int i = 0; i< opponents.size(); i++) {
             opponents.get(i).moveDown(variable);
         }
-        for(int i = 0; i < bulletsOpponents.size(); i++)
-            bulletsOpponents.get(i).moveUp(variable*30);
+
+        for (int i = 0; i < bulletsOpponets.size(); i++) {
+            bulletsOpponets.get(i).moveDown(variable*30);
+        }
 
     }
 
     public void moveUp(int variable) {
 
-        for(int i = 0; i < bulletsHero.size(); i++)
+        for (int i = 0; i < bulletsHero.size(); i++) {
             bulletsHero.get(i).moveUp(variable);
+        }
 
     }
 
     public void createShootHero() {
         bulletsHero.add(new Bullet(hero));
+    }
+
+    public void createShootOpponents() {
+
+        if(!opponents.isEmpty()){
+            //bulletsOpponets.add(new Bullet(opponents.get(randomOpponnent)));
+
+            for (int i = 0; i <4; i++) {
+                int randomOpponnent = random.nextInt(opponents.size());
+                bulletsOpponets.add(new Bullet(opponents.get(randomOpponnent)));
+            }
+
+            if (level == 3){
+                bulletsOpponets.add(new Bullet(opponents.get(0)));
+            }
+
+        }
 
     }
-    public void crateShootOpponents() {
-        if(!opponents.isEmpty()) {
-            bulletsOpponents.add(new Bullet(opponents.get(0)));
-        }
-    }
+
 
     public void checkCollisions() {
         // Iterar sobre todas las balas del héroe
@@ -120,7 +146,6 @@ public class Container {
                 if (heroBulletBounds.intersects(opponentBounds)) {
                     // Eliminar la bala y el oponente
 
-                    System.out.println("hola");
                     bulletsHero.remove(heroBullet);
                     opponents.remove(opponent);
 
@@ -132,8 +157,24 @@ public class Container {
             }
         }
 
-    }
 
+
+        for (int i = 0; i < bulletsOpponets.size(); i++) {
+
+            Bullet opponentBullet = bulletsOpponets.get(i);
+            Rectangle opponentBulletBounds = opponentBullet.getBounds();
+
+            Rectangle heroBounds = hero.getBounds();
+
+            if (heroBounds.intersects(opponentBulletBounds)){
+                hero.reduceLife(10);
+                bulletsOpponets.remove(opponentBullet);
+
+            }
+
+        }
+
+    }
 
 
 

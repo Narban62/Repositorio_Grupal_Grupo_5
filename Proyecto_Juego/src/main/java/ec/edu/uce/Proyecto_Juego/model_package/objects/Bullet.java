@@ -9,26 +9,30 @@ import java.awt.*;
 
 public class Bullet implements IDrawable, IMovable {
 
-    public int x;
-    public int y;
+    private int x;
+    private int y;
 
-    public Bullet(FatherObjects fatherObjects) {
+    public Bullet(FaherObjects faherObjects) {
 
-        if (fatherObjects instanceof Hero) {
-            x = fatherObjects.getPointsX()[0];
-            y = fatherObjects.getPointsY()[0];
+        if (faherObjects instanceof Hero) {
 
-        } else if (fatherObjects instanceof Opponents) {
-            x = fatherObjects.getPointsX()[3];
-            y = fatherObjects.getPointsY()[3];
+            x = faherObjects.getPointsX()[0];
+            y = faherObjects.getPointsY()[0];
+
+        } else if (faherObjects instanceof Opponents) {
+
+            x = faherObjects.getPointsX()[3];
+            y = faherObjects.getPointsY()[3];
+
         }
 
     }
 
+
     @Override
     public void draw(Graphics graphics) {
         graphics.setColor(Color.WHITE);
-        graphics.fillOval(x, y, 15,15);
+        graphics.fillOval( x, y, 15, 15);
     }
 
     @Override
@@ -39,12 +43,11 @@ public class Bullet implements IDrawable, IMovable {
     @Override
     public void moveUp(int variable) {
         y -= variable;
-
     }
 
     @Override
     public void moveDown(int variable) {
-        y += variable;
+        y+= variable;
     }
 
     @Override
@@ -56,13 +59,8 @@ public class Bullet implements IDrawable, IMovable {
     public void moveRight(int variable) {
 
     }
+
     public Rectangle getBounds() {
         return new Rectangle(x, y, 15, 15);
     }
-
-
-
-
 }
-
-

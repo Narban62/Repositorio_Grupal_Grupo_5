@@ -5,17 +5,16 @@ import ec.edu.uce.Proyecto_Juego.model_package.interfaces.IMovable;
 
 import java.awt.*;
 
-public class Opponents extends FatherObjects implements IDrawable, IMovable {
+public class Opponents extends FaherObjects implements IDrawable, IMovable {
 
     int[] cord_x = new int[5];
     int[] cord_y = new int[5];
 
-    public Opponents() {
-        super.setPointsX(cord_x);
-        super.setPointsY(cord_y);
-    }
 
     public Opponents(int randomX, int randomY) {
+        super.setPointsX(cord_x);
+        super.setPointsY(cord_y);
+
         cord_x[0] = randomX;
         cord_x[1] = randomX + 100;
         cord_x[2] = randomX + 100;
@@ -32,8 +31,10 @@ public class Opponents extends FatherObjects implements IDrawable, IMovable {
 
     @Override
     public void draw(Graphics graphics) {
+
         graphics.setColor(Color.GREEN);
         graphics.fillPolygon(cord_x, cord_y, 5);
+
 
     }
 
