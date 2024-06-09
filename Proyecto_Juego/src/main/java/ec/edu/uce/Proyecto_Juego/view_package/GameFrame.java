@@ -32,7 +32,7 @@ public class GameFrame extends JFrame implements KeyListener{
         setContentPane(contentPane);
         addKeyListener(this);
 
-        Timer timer = new Timer(30, new ActionListener() {
+        Timer timer = new Timer(100, new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -46,6 +46,13 @@ public class GameFrame extends JFrame implements KeyListener{
                 }
 
                 repaint();
+
+                if (container.ckeckColissionLine()) {
+                    // Mostrar ventana de Game Over
+                    JOptionPane.showMessageDialog(null, "Game Over", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                    // Cerrar el juego
+                    System.exit(0);
+                }
 
             }
 
@@ -62,6 +69,7 @@ public class GameFrame extends JFrame implements KeyListener{
         container.moveUp(40);
 
         container.checkCollisions();
+        container.ckeckColissionLine();
 
     }
 
@@ -79,15 +87,13 @@ public class GameFrame extends JFrame implements KeyListener{
             container.createShootHero();
 
         } else if (tecla == KeyEvent.VK_LEFT) {
-            container.moveLeft(10);
+            container.moveLeft(30);
         } else if (tecla == KeyEvent.VK_RIGHT) {
-            container.moveRight(10);
+            container.moveRight(30);
         }
 
     }
 
-
-    //prueba pescado
     @Override
     public void keyReleased(KeyEvent e) {
 

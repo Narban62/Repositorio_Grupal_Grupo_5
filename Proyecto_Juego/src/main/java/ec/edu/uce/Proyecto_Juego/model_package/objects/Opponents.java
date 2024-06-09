@@ -10,22 +10,51 @@ public class Opponents extends FaherObjects implements IDrawable, IMovable {
     int[] cord_x = new int[5];
     int[] cord_y = new int[5];
 
+    private int lifeOpponent = 100;
+    private int widghtOpponent;
 
-    public Opponents(int randomX, int randomY) {
-        super.setPointsX(cord_x);
-        super.setPointsY(cord_y);
+    public Opponents(int randomX, int randomY, int level) {
 
-        cord_x[0] = randomX;
-        cord_x[1] = randomX + 100;
-        cord_x[2] = randomX + 100;
-        cord_x[3] = randomX + 50;
-        cord_x[4] = randomX;
+        if (level == 3){
 
-        cord_y[0] = randomY;
-        cord_y[1] = randomY;
-        cord_y[2] = randomY + 50;
-        cord_y[3] = randomY + 25;
-        cord_y[4] = randomY + 50;
+            super.setPointsX(cord_x);
+            super.setPointsY(cord_y);
+
+            cord_x[0] = 0+275;
+            cord_x[1] = 250+275;
+            cord_x[2] = 250+275;
+            cord_x[3] = 125+275;
+            cord_x[4] = 0+275;
+
+            cord_y[0] = 0;
+            cord_y[1] = 0;
+            cord_y[2] = 125;
+            cord_y[3] = 62;
+            cord_y[4] = 125;
+
+            widghtOpponent = cord_x[1]-cord_x[0];
+
+        } else {
+
+            super.setPointsX(cord_x);
+            super.setPointsY(cord_y);
+
+            cord_x[0] = randomX;
+            cord_x[1] = randomX + 100;
+            cord_x[2] = randomX + 100;
+            cord_x[3] = randomX + 50;
+            cord_x[4] = randomX;
+
+            cord_y[0] = randomY;
+            cord_y[1] = randomY;
+            cord_y[2] = randomY + 50;
+            cord_y[3] = randomY + 25;
+            cord_y[4] = randomY + 50;
+
+            widghtOpponent = cord_x[1]-cord_x[0];
+
+        }
+
 
     }
 
@@ -34,6 +63,13 @@ public class Opponents extends FaherObjects implements IDrawable, IMovable {
 
         graphics.setColor(Color.GREEN);
         graphics.fillPolygon(cord_x, cord_y, 5);
+
+        //dibuja la vida en pantalla
+        graphics.setColor(Color.white);
+        Font font = new Font("Arial", Font.BOLD, 15);
+        graphics.setFont(font);
+        graphics.drawString( String.valueOf(lifeOpponent), cord_x[3]-15, cord_y[3]-5);
+
 
 
     }
@@ -85,6 +121,30 @@ public class Opponents extends FaherObjects implements IDrawable, IMovable {
         int height = maxY - minY;
 
         return new Rectangle(minX, minY, width, height);
+    }
+
+    public int getMax_Y_Opponent() {
+        return cord_y[4];
+    }
+
+    public int getWidghtOpponent() {
+        return widghtOpponent;
+    }
+
+    public void setWidghtOpponent(int widghtOpponent) {
+        this.widghtOpponent = widghtOpponent;
+    }
+
+    public int getLifeOpponent() {
+        return lifeOpponent;
+    }
+
+    public void setLifeOpponent(int lifeOpponent) {
+        this.lifeOpponent = lifeOpponent;
+    }
+
+    public void reduceLifeOpponnet(int variable) {
+        lifeOpponent -= variable;
     }
 
 }

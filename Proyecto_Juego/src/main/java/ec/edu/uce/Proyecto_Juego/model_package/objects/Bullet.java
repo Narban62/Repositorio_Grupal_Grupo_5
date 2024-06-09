@@ -12,7 +12,7 @@ public class Bullet implements IDrawable, IMovable {
     private int x;
     private int y;
 
-    public Bullet(FaherObjects faherObjects) {
+    public Bullet(FaherObjects faherObjects, int addBulletAtPosition) {
 
         if (faherObjects instanceof Hero) {
 
@@ -21,8 +21,8 @@ public class Bullet implements IDrawable, IMovable {
 
         } else if (faherObjects instanceof Opponents) {
 
-            x = faherObjects.getPointsX()[3];
-            y = faherObjects.getPointsY()[3];
+            x = faherObjects.getPointsX()[4]+addBulletAtPosition;
+            y = faherObjects.getPointsY()[4];
 
         }
 

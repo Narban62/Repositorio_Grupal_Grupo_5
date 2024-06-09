@@ -19,6 +19,8 @@ public class Hero extends FaherObjects implements IDrawable, IMovable {
     public int[] cord_Y_Life = { 50, 50, 80, 80 };
 
     private int life = 100;
+    private int score = 0;
+    private String levelName;
 
     public Hero() {
         super.setPointsX(cord_x);
@@ -30,9 +32,20 @@ public class Hero extends FaherObjects implements IDrawable, IMovable {
     @Override
     public void draw(Graphics graphics) {
 
-        //dibujar el personaje
-        graphics.setColor(Color.WHITE);
-        graphics.fillPolygon(cord_x, cord_y, 3);
+        if (life>0){
+            //dibujar el personaje
+            graphics.setColor(Color.WHITE);
+            graphics.fillPolygon(cord_x, cord_y, 3);
+        }
+
+        if (levelName!= null){
+            //nombre nivel
+            graphics.setColor(Color.white);
+            Font font_Level = new Font("Arial", Font.BOLD, 40);
+            graphics.setFont(font_Level);
+            graphics.drawString(levelName, 400-(font_Level.getSize()/2), 75);
+
+        }
 
         //dibujar la linea
         graphics.setColor(Color.red);
@@ -41,44 +54,43 @@ public class Hero extends FaherObjects implements IDrawable, IMovable {
         // Dibujar la vida
         graphics.setColor(Color.red);
         graphics.fillPolygon(cord_X_Life, cord_Y_Life, 4);
+        graphics.setColor(Color.white);
+        Font font = new Font("Arial", Font.BOLD, 25);
+        graphics.setFont(font);
+        graphics.drawString( String.valueOf(life), cord_X_Life[3]+10, cord_Y_Life[3]-5);
+
+        //dibuja el score en pantalla
+        graphics.setColor(Color.white);
+        Font font_life = new Font("Arial", Font.BOLD, 30);
+        graphics.setFont(font_life);
+        graphics.drawString("Score: " + score, 625, 75);
 
     }
-
     @Override
     public void moveUp(int variable) {
         // TODO Auto-generated method stub
-
     }
-
     @Override
     public void moveDown(int variable) {
         // TODO Auto-generated method stub
-
     }
-
     @Override
     public void moveLeft(int variable) {
         // Restar
         for (int i = 0; i < cord_x.length; i++) {
             cord_x[i] = cord_x[i] - variable;
-
         }
     }
-
     @Override
     public void moveRight(int variable) {
         // Sumar
         for (int i = 0; i < cord_x.length; i++) {
             cord_x[i] = cord_x[i] + variable;
-
         }
-
     }
-
     @Override
     public void draw(Graphics graphics, IDrawable drawable) {
         // TODO Auto-generated method stub
-
     }
 
     public Rectangle getBounds() {
@@ -99,19 +111,43 @@ public class Hero extends FaherObjects implements IDrawable, IMovable {
 
         return new Rectangle(minX, minY, width, height);
     }
-
     public void reduceLife(int variable) {
 
         if (life > 0){
-
             life -= variable;
             System.out.println(life);
-
             for (int i = 1; i < 3; i++) {
                 cord_X_Life[i] -= variable*2;
             }
-
         }
+    }
+    public void addScore(int variable) {
+        score += variable;
+    }
 
+    @Override
+    public int getLife() {
+        return life;
+    }
+
+    @Override
+    public void setLife(int life) {
+        this.life = life;
+    }
+
+    public String getLevelName() {
+        return levelName;
+    }
+
+    public void setLevelName(String levelName) {
+        this.levelName = levelName;
+    }
+
+    public int getLineHeigth() {
+        return lineHeigth;
+    }
+
+    public void setLineHeigth(int lineHeigth) {
+        this.lineHeigth = lineHeigth;
     }
 }

@@ -4,6 +4,7 @@ package ec.edu.uce.Proyecto_Juego.controller_package;
 
 import ec.edu.uce.Proyecto_Juego.model_package.objects.Bullet;
 import ec.edu.uce.Proyecto_Juego.model_package.objects.Hero;
+import ec.edu.uce.Proyecto_Juego.model_package.objects.LevelManager;
 import ec.edu.uce.Proyecto_Juego.model_package.objects.Opponents;
 
 import java.awt.*;
@@ -19,20 +20,26 @@ public class Container {
     List<Opponents> opponents = new ArrayList<Opponents>();
     List<Bullet> bulletsHero = new ArrayList<Bullet>();
     List<Bullet> bulletsOpponets = new ArrayList<Bullet>();
+    List<LevelManager> levelManagers = new ArrayList<LevelManager>();
     Random random = new Random();
 
     // varaible de levels
-    private int level = 1;
+    private int level;
+    private int inncrement;
 
     //Opponents opponet = new Opponents();
 
     public  Container() {
 
-
+/*0*/   levelManagers.add(new LevelManager(1,5, 100, 1,5,5));
+/*1*/   levelManagers.add(new LevelManager(2,10,34,2,10,10));
+/*2*/   levelManagers.add(new LevelManager(3,1,100,3,15,15));
+        level = levelManagers.get(0).getLevel();
     }
 
 
     public void draw(Graphics graphics) {
+
         hero.draw(graphics);
 
         creatOpponents(level);
@@ -40,11 +47,9 @@ public class Container {
         for (int i = 0; i< opponents.size(); i++) {
             opponents.get(i).draw(graphics);
         }
-
         for (int i = 0; i< bulletsHero.size(); i++) {
             bulletsHero.get(i).draw(graphics);
         }
-
         for (int i = 0; i< bulletsOpponets.size(); i++) {
             bulletsOpponets.get(i).draw(graphics);
         }
@@ -55,22 +60,26 @@ public class Container {
 
         if (level == 1 && opponents.isEmpty()) {
 
-            for (int i = 0; i< 5; i++) {
-                opponents.add(new Opponents(random.nextInt(SCREEN_WITDH), random.nextInt(SCREEN_HEIGHT)));
+            hero.setLevelName("Nivel 1");
+            for (int i = 0; i< levelManagers.get(level-1).getNumberOfOpponents(); i++) {
+                opponents.add(new Opponents(random.nextInt(SCREEN_WITDH), random.nextInt(SCREEN_HEIGHT),level));
             }
             this.level++;
 
         } else if (level == 2 && opponents.isEmpty()) {
 
-            for (int i = 0; i< 10; i++) {
-                opponents.add(new Opponents(random.nextInt(SCREEN_WITDH), random.nextInt(SCREEN_HEIGHT)));
+            hero.setLevelName("Nivel 2");
+            for (int i = 0; i< levelManagers.get(level-1).getNumberOfOpponents(); i++) {
+                opponents.add(new Opponents(random.nextInt(SCREEN_WITDH), random.nextInt(SCREEN_HEIGHT), level));
             }
+
             this.level++;
 
         } else if (level == 3 && opponents.isEmpty()) {
 
-            for (int i = 0; i< 1; i++) {
-                opponents.add(new Opponents(random.nextInt(SCREEN_WITDH), random.nextInt(SCREEN_HEIGHT)));
+            hero.setLevelName("Nivel 3");
+            for (int i = 0; i< levelManagers.get(level-1).getNumberOfOpponents(); i++) {
+                opponents.add(new Opponents(random.nextInt(SCREEN_WITDH), random.nextInt(SCREEN_HEIGHT), level));
             }
 
             this.level++;
@@ -109,7 +118,12 @@ public class Container {
     }
 
     public void createShootHero() {
-        bulletsHero.add(new Bullet(hero));
+
+        if (hero.getLife()>0){
+            bulletsHero.add(new Bullet(hero,0));
+        }
+
+
     }
 
     public void createShootOpponents() {
@@ -117,13 +131,34 @@ public class Container {
         if(!opponents.isEmpty()){
             //bulletsOpponets.add(new Bullet(opponents.get(randomOpponnent)));
 
-            for (int i = 0; i <4; i++) {
-                int randomOpponnent = random.nextInt(opponents.size());
-                bulletsOpponets.add(new Bullet(opponents.get(randomOpponnent)));
-            }
+            if (level-1 == 1) {
 
-            if (level == 3){
-                bulletsOpponets.add(new Bullet(opponents.get(0)));
+                int randomOpponnent = random.nextInt(opponents.size());
+                inncrement = 0;
+
+                for (int i = 0; i <levelManagers.get(level-2).getNumberShoot(); i++) {
+                    bulletsOpponets.add(new Bullet(opponents.get(randomOpponnent), inncrement));
+                    inncrement+= opponents.get(randomOpponnent).getWidghtOpponent()/2;
+                }
+
+            } else if (level-1 == 2) {
+
+                int randomOpponnent = random.nextInt(opponents.size());
+                inncrement = 0;
+
+                for (int i = 0; i <levelManagers.get(level-2).getNumberShoot(); i++) {
+                    bulletsOpponets.add(new Bullet(opponents.get(randomOpponnent), inncrement));
+                    inncrement+= opponents.get(randomOpponnent).getWidghtOpponent()/2;
+                }
+
+            } else if (level-1 == 3) {
+
+                inncrement = 0;
+                for (int i = 0; i <levelManagers.get(level-2).getNumberShoot(); i++) {
+                    bulletsOpponets.add(new Bullet(opponents.get(0), inncrement));
+                    inncrement+= opponents.get(0).getWidghtOpponent()/2;
+                }
+
             }
 
         }
@@ -144,16 +179,68 @@ public class Container {
 
                 // Si hay una colisión entre una bala del héroe y un oponente
                 if (heroBulletBounds.intersects(opponentBounds)) {
-                    // Eliminar la bala y el oponente
 
-                    bulletsHero.remove(heroBullet);
-                    opponents.remove(opponent);
+                    if (level-1 == 1){
 
-                    // Decrementar j para evitar ConcurrentModificationException
-                    j--;
+                        opponent.reduceLifeOpponnet(levelManagers.get(level-2).getShotsToDestroy());
+                        bulletsHero.remove(heroBullet);
+                        hero.addScore(levelManagers.get(level-2).getScorePerOpponnetDestroyed());
+
+                        if (opponent.getLifeOpponent() <=0){                            
+                            opponents.remove(opponent);
+                        }
+
+
+                    }else if (level-1 == 2){
+
+                        opponent.reduceLifeOpponnet(levelManagers.get(level-2).getShotsToDestroy());
+                        bulletsHero.remove(heroBullet);
+                        hero.addScore(levelManagers.get(level-2).getScorePerOpponnetDestroyed());
+
+                        if (opponent.getLifeOpponent() <=0){
+                            opponents.remove(opponent);
+                        }
+
+                    } else if (level-1 == 3) {
+
+                        hero.addScore(levelManagers.get(level-2).getScorePerOpponnetDestroyed());
+
+                        if(hero.getLife() < 50){
+
+                            opponent.reduceLifeOpponnet(5);
+                            bulletsHero.remove(heroBullet);
+
+                            if (opponent.getLifeOpponent() <=0){
+                                opponents.remove(opponent);
+                            }
+
+                        }else if(hero.getLife()>=50 && hero.getLife()<=75){
+
+                            opponent.reduceLifeOpponnet(10);
+                            bulletsHero.remove(heroBullet);
+
+                            if (opponent.getLifeOpponent() <=0){
+                                opponents.remove(opponent);
+                            }
+
+                        }else if(hero.getLife()>75){
+
+                            opponent.reduceLifeOpponnet(15);
+                            bulletsHero.remove(heroBullet);
+
+                            if (opponent.getLifeOpponent() <=0){
+                                opponents.remove(opponent);
+                            }
+
+                        }
+
+
+                    }
+
                     // Salir del bucle interno ya que ya hemos manejado la colisión
                     break;
                 }
+
             }
         }
 
@@ -167,12 +254,41 @@ public class Container {
             Rectangle heroBounds = hero.getBounds();
 
             if (heroBounds.intersects(opponentBulletBounds)){
-                hero.reduceLife(10);
-                bulletsOpponets.remove(opponentBullet);
+                
+             if (hero.getLife()>0){
+
+                    if(level-1 == 1){
+                        hero.reduceLife(levelManagers.get(level-2).getDamagePerShot());
+                        bulletsOpponets.remove(opponentBullet);
+                    }else if(level-1 == 2){
+                        hero.reduceLife(levelManagers.get(level-2).getDamagePerShot());
+                        bulletsOpponets.remove(opponentBullet);
+                    } else if (level-1 == 3) {
+                        hero.reduceLife(levelManagers.get(level-2).getDamagePerShot());
+                        bulletsOpponets.remove(opponentBullet);
+                    }
+
+                }
 
             }
 
         }
+
+    }
+
+    public boolean ckeckColissionLine(){
+
+        for (int i=0; i < opponents.size(); i++){
+
+            if (opponents.get(i).getMax_Y_Opponent() >= hero.getLineHeigth()){
+                opponents.remove(opponents.get(i));
+                hero.reduceLife(100);
+                return true;
+            }
+
+        }
+
+        return false;
 
     }
 
