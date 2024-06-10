@@ -1,15 +1,15 @@
-package game_package;
+package model_package;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Rectangle;
+import interface_package.*;
 
-import Interfaces_game.IDrawable;
-import Interfaces_game.IMovable;
-
-public class Bullet implements IDrawable, IMovable {
+public class Bullet implements IDrawable,IMovable {
 	
 	private int x, y;
+
+	public Bullet() {
+	}
 
 	public Bullet(int x, int y) {
 		this.x = x;
@@ -46,18 +46,23 @@ public class Bullet implements IDrawable, IMovable {
 
 	}
 
-	public boolean collision(Hero hero) {
-		Rectangle bulletBounds = new Rectangle(x, y, 7, 13);
-		Rectangle playerBounds = new Rectangle(hero.getX(), hero.getY(), 30, 30);
-		return bulletBounds.intersects(playerBounds);
-	}
+//	public boolean collision(Hero hero) {
+//		Rectangle bulletBounds = new Rectangle(x, y, 7, 13);
+//		Rectangle playerBounds = new Rectangle(hero.getX(), hero.getY(), 30, 30);
+//		return bulletBounds.intersects(playerBounds);
+//	}
 
 	public int getX() {
+
 		return x;
 	}
 
 	public int getY() {
+
 		return y;
 	}
 
+	public void update(){
+		movements("DOWN");
+	 }
 }
