@@ -2,13 +2,13 @@ package ec.edu.uce.JuegoMain.model_package;
 
 public class HeroData {
 
-    private String name;
-    private int health;
+    private String user;
+    private int level;
     private int score;
 
-    public HeroData(String name, int health, int score) {
-        this.name = name;
-        this.health = health;
+    public HeroData(String user, int level, int score) {
+        this.user = user;
+        this.level = level;
         this.score = score;
     }
 
@@ -16,20 +16,20 @@ public class HeroData {
 
     }
 
-    public String getName() {
-        return name;
+    public String getUser() {
+        return user;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUser(String user) {
+        this.user = user;
     }
 
-    public int getHealth() {
-        return health;
+    public int getLevel() {
+        return level;
     }
 
-    public void setHealth(int health) {
-        this.health = health;
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     public int getScore() {

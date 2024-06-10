@@ -25,7 +25,7 @@ public class ServerConnection {
             String jsonString = objectMapper.writeValueAsString(heroData);
 
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI("http://localhost:8080/miurl"))
+                    .uri(new URI("http://localhost:8080/register"))
                     .timeout(Duration.ofMinutes(1))
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(jsonString))
@@ -35,6 +35,9 @@ public class ServerConnection {
 
             if (response.statusCode() != 200) {
                 System.out.println("Error: " + response.statusCode());
+            }else {
+                System.out.println("Response: " + response.body());
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -46,6 +49,25 @@ public class ServerConnection {
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(new URI(url))
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                System.out.println("Response: " + response.body());
+            } else {
+                System.out.println("Error: " + response.statusCode());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void consumeUrconsulta() {
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(new URI("http://localhost:8080/miconsumo"))
                     .build();
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());

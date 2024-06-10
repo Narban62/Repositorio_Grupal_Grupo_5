@@ -19,6 +19,8 @@ public class GameFrame extends JFrame {
 	private Opponents enemies;
 	private Container container;
 	private final int GAME_OVER_LINE_Y = 400;
+	ServerConnection serverConnectioncon = new ServerConnection();
+	String name = null;
 
 	public GameFrame() {
 
@@ -31,14 +33,25 @@ public class GameFrame extends JFrame {
 		setLocation(290, 120);
 		setSize(800, 600);
 		conexion();
+		consumo();
+		serverConnectioncon.sendHeroData(new HeroData("ASD",1,300));
+		
 
 		String name = JOptionPane.showInputDialog("Ingrese nombre del usuario:");
+
+
+		while (name == null || name.isEmpty()) {
+			name = JOptionPane.showInputDialog("Ingrese nombre del usuario:");
+		}
+
+
 
 		hero = new Hero(390, 440, 100, name);
 		enemies = new Opponents(5, 800, 600);
 
 		// Crear la instancia de Container
 		container = new Container(hero, new Bullet(), List.of(enemies), new Random());
+		container.passInfo(new HeroData(name, 7, 675));
 
 		JPanel gamePanel = new JPanel() {
 			@Override
@@ -162,6 +175,13 @@ public class GameFrame extends JFrame {
 		HeroData heroData = new HeroData();
 // set heroData properties
 		serverConnection.consumeUrl();
+	}
+
+	public void consumo(){
+		ServerConnection serverConnection = new ServerConnection();
+		HeroData heroData = new HeroData();
+
+		serverConnection.consumeUrconsulta();
 	}
 
 }

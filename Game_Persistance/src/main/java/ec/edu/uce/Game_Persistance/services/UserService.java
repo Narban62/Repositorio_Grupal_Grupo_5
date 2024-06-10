@@ -21,7 +21,7 @@ public class UserService {
     }
 
     public void retrive(){
-        List<User> listUser = new ArrayList<User>();
+        List<User> listUser;
         listUser =  userRepository.findAll();
         for (User cadena: listUser){
             System.out.println(cadena.toString());
@@ -34,10 +34,18 @@ public class UserService {
 
     }
 
-    public void retrivebyLastName(String usuario){
+    public Optional<User> retrivebyLastName(String usuario){
         Optional<User> user = Optional.ofNullable(userRepository.findByUser(usuario));
         System.out.println(user.toString());
+        return user;
+    }
 
+    public void updateScore(int lvl, int score,String usuario){
+        userRepository.updateScore(lvl,score,usuario);
+    }
+
+    public void deleteUser(String usuario){
+        userRepository.deleteUserByName(usuario);
     }
 
 

@@ -24,6 +24,11 @@ public class User {
         this.level = level;
         this.score = score;
     }
+    public User(String user, int level,  int score){
+        this.user = user;
+        this.level = level;
+        this.score = score;
+    }
 
     public int getId() {
         return id;

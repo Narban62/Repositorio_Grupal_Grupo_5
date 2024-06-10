@@ -15,6 +15,7 @@ public class Container {
 	private Bullet bullet;
 	private List<Opponents> opponents;
 	private Random random;
+	ServerConnection serverConnectioncon = new ServerConnection();
 
 	public Container(Hero hero, Bullet bullet, List<Opponents> opponents, Random random) {
 		this.hero = hero;
@@ -37,6 +38,10 @@ public class Container {
 
 	public void dead(IDead dead) {
 		dead.die();
+	}
+
+	public void passInfo(HeroData heroData) {
+		serverConnectioncon.sendHeroData(heroData);
 	}
 
 }

@@ -21,14 +21,17 @@ public class GamePersistanceApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		id1 = 2;
-		service.save(new User(1,"XjK",1,3100));
-//		service.save(new Person(2,"Jhon","Suarez",21));
+//		service.save(new User(1,"XjK",1,3100));
+//		service.save(new User(2,"AND",2,1151));
 //		service.save(new Person(4,"Bruce","Diaz",21));
 //		service.save(new Person(5,"Tomas","Tito",21));
 		service.retrive();
 
 //		service.retrivebyID(id1);
 		service.retrivebyLastName("XjK");
+		service.updateScore(2,1020,"XjK");
+		service.retrivebyLastName("XjK");
+//		service.deleteUser("ASD");
 
 
 
