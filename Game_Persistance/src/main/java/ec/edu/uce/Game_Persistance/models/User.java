@@ -13,21 +13,26 @@ public class User {
     private String user;
     private int level;
     private int score;
+    private int life;
+
+
 
     public User(){
 
     }
     
-    public User(int id, String user, int level, int score){
+    public User(int id, String user, int level, int score, int life){
         this.id = id;
         this.user = user;
         this.level = level;
         this.score = score;
+        this.life = life;
     }
-    public User(String user, int level,  int score){
+    public User(String user, int level,  int score, int life){
         this.user = user;
         this.level = level;
         this.score = score;
+        this.life = life;
     }
 
     public int getId() {
@@ -62,6 +67,14 @@ public class User {
         this.score = score;
     }
 
+    public int getLife() {
+        return life;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -69,6 +82,7 @@ public class User {
                 ", user='" + user + '\'' +
                 ", level=" + level +
                 ", score=" + score +
+                ", life=" + life +
                 '}';
     }
 }

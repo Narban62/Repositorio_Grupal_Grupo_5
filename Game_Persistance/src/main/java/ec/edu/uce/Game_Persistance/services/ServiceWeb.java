@@ -16,9 +16,6 @@ public class ServiceWeb {//capa controlador
     UserService service;
 
 
-
-    }
-
     @RequestMapping(value = "/miconsumo", method = RequestMethod.GET)//tipo get SIEMPRE ESPECIFICAR
     public Optional<User> endpointConsume(){
         Optional<User> user = service.retrivebyLastName("AND");
@@ -34,7 +31,7 @@ public class ServiceWeb {//capa controlador
 
     @PutMapping("/updateHeroData")
     public ResponseEntity<String> updateUserState(@RequestBody User user) {
-        service.updateScore(user.getLevel(), user.getScore(), user.getUser());
+        service.updateScore(user.getLevel(), user.getScore(),user.getLife(), user.getUser());
         return ResponseEntity.ok("Datos actualizados correctamente");
     }
 
@@ -51,7 +48,7 @@ public class ServiceWeb {//capa controlador
     @PutMapping("/DeleteHeroData")
     public ResponseEntity<String> DeleteUser(@RequestBody User user) {
         String delUser = user.toString();
-        service.updateScore(user.getLevel(), user.getScore(), user.getUser());
+        service.updateScore(user.getLevel(), user.getScore(), user.getLife(), user.getUser());
         return ResponseEntity.ok("Datos del usuario : " + delUser +  " se han borrado correctamente");
     }
 

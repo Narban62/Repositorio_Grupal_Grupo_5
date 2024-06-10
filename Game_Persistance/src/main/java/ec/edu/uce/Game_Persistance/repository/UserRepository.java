@@ -19,6 +19,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Transactional
     @Modifying
+    @Query("UPDATE User u SET u.level = ?1, u.score = ?2, u.life = ?3 WHERE u.user = ?4")
+    void saveState(int level, int score, int life, String user);
+
+    @Transactional
+    @Modifying
     @Query("DELETE FROM User u WHERE u.user = ?1")
     void deleteUserByName(String username);
 

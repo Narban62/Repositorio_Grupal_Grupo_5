@@ -40,9 +40,11 @@ public class UserService {
         return user;
     }
 
-    public void updateScore(int lvl, int score,String usuario){
-        userRepository.updateScore(lvl,score,usuario);
+    public void updateScore(int lvl, int score,int life,String usuario){
+        userRepository.saveState(lvl,score,life,usuario);
     }
+
+
 
     public void deleteUser(String usuario){
         userRepository.deleteUserByName(usuario);
